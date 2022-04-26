@@ -34,9 +34,11 @@ class Layer:
 
     def Calculate_Gradient(self, grad_output, t):
         grad_input = np.dot(grad_output, self.weights.T)
-
         self.gradientW = np.dot(self.input.T, grad_output)
-        self.gradientB = grad_output.mean(axis=0)*self.input.shape[0]
+        if grad_output.shape == ():
+            self.gradientB = np.dot(grad_output, self.input.shape[0])
+        else:
+            self.gradientB = np.dot(grad_output.mean(axis=0), self.input.shape[0])
 
         self.gradientW = np.resize(self.gradientW, self.weights.shape)
         self.gradientB = np.resize(self.gradientW, self.biases.shape)

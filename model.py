@@ -32,14 +32,16 @@ class Model:
                     model_output = self.layers[layer_index].Calc_Layer_Output(model_output)
                 self.loss = self.learn.Binary_Cross_Entropy(labels=shuffled_labels, preds=model_output,
                                                             step=1, starting_sample=sample)
-                loss_gradient = self.learn.Derived_Binary_Cross_Entropy(labels=shuffled_labels[sample], preds=model_output,
+                loss_gradient = self.learn.Derived_Binary_Cross_Entropy(labels=shuffled_labels, preds=model_output,
                                                                         step=1, starting_sample=sample)
+                # loss_gradient = np.array([loss_gradient])
+
                 amount_of_samples_done = (sample+1) + epoch*sample_amount
                 for layer_index in range(len(self.layers)-1, 0, -1):
                     loss_gradient = self.layers[layer_index].Calculate_Gradient(loss_gradient, t=amount_of_samples_done)
 
-                #amount_of_samples_done = (sample+1) + epoch*sample_amount
-                #self.learn.Adam_Optimization(t=amount_of_samples_done, layers=self.layers)  # layer1 doesn't have weights to update
+                # amount_of_samples_done = (sample+1) + epoch*sample_amount
+                # self.learn.Adam_Optimization(t=amount_of_samples_done, layers=self.layers)  # layer1 doesn't have weights to update
 
             end = time()
             if (epoch+1) % print_every == 0 or True:
