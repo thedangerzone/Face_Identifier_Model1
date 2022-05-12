@@ -45,8 +45,8 @@ class Layer:
 
         weight_change, bias_change = self.learn.Adam_Optimization(t, self.gradientW, self.gradientB)
 
-        self.weights - weight_change
-        self.biases - bias_change
+        self.weights -= weight_change
+        self.biases -= bias_change
 
         return grad_input
 
